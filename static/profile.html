@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПСБ.Профиль 360</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .header-bg { background: linear-gradient(135deg, #003399 0%, #0055cc 100%); color: white; padding: 2rem 0; margin-bottom: 2rem; }
+        .card { border: none; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+        .profile-avatar { width: 100px; height: 100px; background: #e9ecef; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #6c757d; margin: 0 auto 1rem; }
+        .stat-label { font-size: 0.85rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-value { font-size: 1.25rem; font-weight: 600; color: #212529; }
+        .interest-badge { background-color: #e3f2fd; color: #0d47a1; padding: 6px 12px; border-radius: 20px; font-size: 0.9rem; display: inline-block; margin: 0 5px 5px 0; }
+        .nav-link { color: rgba(255,255,255,0.8); }
+        .nav-link:hover { color: white; text-decoration: underline; }
+        .llm-box { background: #fff3e0; border-left: 4px solid #f26122; border-radius: 4px; padding: 1rem; margin-bottom: 1.5rem; }
+    </style>
+</head>
+<body>
+
+    <div class="header-bg">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold m-0">ПСБ.Профиль 360</h2>
+                <a class="nav-link" href="/">← Назад к рекомендациям</a>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="userIdInput" placeholder="Введите ID клиента (например, user_777)" value="user_777">
+                        <button class="btn btn-light px-4 fw-bold" style="color: #003399;" type="button" onclick="loadProfile()">
+                            Загрузить профиль
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <!-- Лоадер -->
+        <div id="loader" class="text-center py-5" style="display: none;">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">Анализ данных клиента (LLM)...</p>
+        </div>
+
+        <!-- Контент профиля -->
+        <div id="profileContent" style="display: none;">
+            <div class="row g-4">
+                <!-- Левая колонка: Основное -->
+                <div class="col-md-4">
+                    <div class="card p-4 text-center h-100">
+                        <div class="profile-avatar">👤</div>
+                        <h4 class="fw-bold mb-1" id="fullName">...</h4>
+                        <p class="text-muted mb-3" id="userIdDisplay">ID: ...</p>
+                        <div class="badge bg-success fs-6 mb-3" id="segmentBadge">Segment</div>
+                        
+                        <hr class="my-3">
+                        
+                        <div class="row text-start">
+                            <div class="col-6 mb-3">
+                                <div class="stat-label">Возраст</div>
+                                <div class="stat-value" id="ageVal">-</div>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <div class="stat-label">Риск-профиль</div>
+                                <div class="stat-value" id="riskVal">-</div>
+                            </div>
+                            <div class="col-12">
+                                <div class="stat-label">Бонусы лояльности</div>
+                                <div class="stat-value text-primary" id="loyaltyVal">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Правая колонка: Детали -->
+                <div class="col-md-8">
+                    <div class="card p-4 h-100">
+                        <h5 class="fw-bold mb-3 text-secondary">Портрет клиента (LLM)</h5>
+                        
+                        <div class="llm-box">
+                            <div class="fw-bold mb-1 text-dark">🤖 AI Summary:</div>
+                            <div id="llmSummaryText" class="fst-italic text-muted">
+                                Генерация описания...
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="p-3 bg-light rounded">
+                                    <div class="stat-label mb-1">Уровень дохода (оценка)</div>
+                                    <div class="fs-4 fw-bold text-dark" id="incomeVal">-</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3 mt-md-0">
+                                <div class="p-3 bg-light rounded">
+                                    <div class="stat-label mb-1">Активных продуктов</div>
+                                    <div class="fs-4 fw-bold text-dark" id="productsVal">-</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h6 class="fw-bold mb-3">Выявленные интересы</h6>
+                        <div id="interestsArea" class="mb-4">
+                            <!-- Теги интересов -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadProfile() {
+            const userId = document.getElementById('userIdInput').value;
+            if (!userId) { alert("Введите ID"); return; }
+
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('profileContent').style.display = 'none';
+
+            try {
+                const response = await fetch(`/api/profile/${userId}`);
+                if (!response.ok) throw new Error("Ошибка API");
+                
+                const data = await response.json();
+                renderProfile(data);
+            } catch (e) {
+                console.error(e);
+                alert("Не удалось загрузить профиль");
+            } finally {
+                document.getElementById('loader').style.display = 'none';
+            }
+        }
+
+        function renderProfile(data) {
+            document.getElementById('fullName').innerText = data.full_name;
+            document.getElementById('userIdDisplay').innerText = `ID: ${data.user_id}`;
+            document.getElementById('segmentBadge').innerText = data.segment;
+            
+            // Цвет бейджа в зависимости от сегмента
+            const seg = data.segment.toLowerCase();
+            const badge = document.getElementById('segmentBadge');
+            badge.className = 'badge fs-6 mb-3 ' + (
+                seg.includes('vip') || seg.includes('private') ? 'bg-warning text-dark' : 
+                seg.includes('premium') ? 'bg-dark' : 'bg-success'
+            );
+
+            document.getElementById('ageVal').innerText = data.age;
+            document.getElementById('riskVal').innerText = data.risk_profile;
+            document.getElementById('loyaltyVal').innerText = data.loyalty_points.toLocaleString();
+            document.getElementById('incomeVal').innerText = data.income_level;
+            document.getElementById('productsVal').innerText = data.active_products_count;
+            
+            // Вставляем текст от LLM
+            const llmText = data.llm_summary || "Описание не сформировано.";
+            document.getElementById('llmSummaryText').innerText = llmText;
+
+            // Интересы
+            const interestsHtml = data.top_interests.map(tag => 
+                `<span class="interest-badge">${tag}</span>`
+            ).join('');
+            document.getElementById('interestsArea').innerHTML = interestsHtml;
+
+            document.getElementById('profileContent').style.display = 'block';
+        }
+        
+        // Автозагрузка если есть в URL ?id=...
+        window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if(id) {
+                document.getElementById('userIdInput').value = id;
+                loadProfile();
+            }
+        }
+    </script>
+</body>
+</html>

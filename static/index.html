@@ -37,6 +37,9 @@
                         <button class="btn btn-psb px-4" type="button" onclick="getRecommendations()">
                             Подобрать
                         </button>
+                        <button class="btn btn-outline-secondary px-3" type="button" onclick="goToProfile()" title="Профиль клиента">
+                            👤
+                        </button>
                     </div>
                 </div>
             </div>
@@ -66,6 +69,15 @@
             'investment': 'Инвестиции',
             'premium_service': 'Премиум'
         };
+        
+        function goToProfile() {
+            const userId = document.getElementById('userId').value;
+            if (!userId) { 
+                alert("Пожалуйста, введите ID пользователя"); 
+                return; 
+            }
+            window.location.href = `/profile?id=${userId}`;
+        }
 
         async function getRecommendations() {
             const userId = document.getElementById('userId').value;
