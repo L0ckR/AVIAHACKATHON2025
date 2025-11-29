@@ -1,0 +1,22 @@
+{
+  "0": {
+    "name": "Family Realists",
+    "description": "Highly family‑oriented, value stability and routine; enjoy shopping, avoid credit and investment, prefer debit or children’s cards and savings accounts"
+  },
+  "1": {
+    "name": "Experienced Rationalists",
+    "description": "Men and women aged 45+, serious and independent; plan and save, value security and family, enjoy nature; avoid impulsive spending, invest for future"
+  },
+  "2": {
+    "name": "Seekers of the Easy Path",
+    "description": "Young or mid‑aged individuals with undefined life goals; seek quick results and new experiences, willing to take risks; often take microloans or car loans and invest in education"
+  },
+  "3": {
+    "name": "Ambitious Careerists",
+    "description": "Serious, ambitious people who plan everything, hold clear opinions and high career goals; financially literate, seek premium cards and investment products for long‑term planning"
+  },
+  "4": {
+    "name": "Keepers of the Past",
+    "description": "Primarily pensioners with low incomes; prefer cash, minimal banking products and dislike online services; price sensitive and value traditional in‑person interactions"
+  }
+}
