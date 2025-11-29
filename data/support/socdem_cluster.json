@@ -1,22 +1,32 @@
 {
   "0": {
     "name": "Family Realists",
-    "description": "Highly family‑oriented, value stability and routine; enjoy shopping, avoid credit and investment, prefer debit or children’s cards and savings accounts"
+    "description": "Highly family‑oriented, value stability and routine; enjoy shopping, avoid credit and investment, prefer debit or children’s cards and savings accounts",
+    "russian_name": "Семейные реалисты",
+    "russian_description": "Ориентированы на семью, ценят стабильность и рутину. Любят покупки, избегают кредитов и рискованных инвестиций. Предпочитают дебетовые, детские карты и сберегательные счета."
   },
   "1": {
     "name": "Experienced Rationalists",
-    "description": "Men and women aged 45+, serious and independent; plan and save, value security and family, enjoy nature; avoid impulsive spending, invest for future"
+    "description": "Men and women aged 45+, serious and independent; plan and save, value security and family, enjoy nature; avoid impulsive spending, invest for future",
+    "russian_name": "Опытные рационалисты",
+    "russian_description": "Люди 45+, серьезные и независимые. Планируют и копят, ценят безопасность и семью. Избегают импульсивных трат, инвестируют в будущее (вклады, НПФ)."
   },
   "2": {
     "name": "Seekers of the Easy Path",
-    "description": "Young or mid‑aged individuals with undefined life goals; seek quick results and new experiences, willing to take risks; often take microloans or car loans and invest in education"
+    "description": "Young or mid‑aged individuals with undefined life goals; seek quick results and new experiences, willing to take risks; often take microloans or car loans and invest in education",
+    "russian_name": "Искатели легких путей",
+    "russian_description": "Молодые или среднего возраста, ищут быстрые результаты и новые впечатления. Склонны к риску, часто берут микрозаймы или автокредиты, тратят на развитие."
   },
   "3": {
     "name": "Ambitious Careerists",
-    "description": "Serious, ambitious people who plan everything, hold clear opinions and high career goals; financially literate, seek premium cards and investment products for long‑term planning"
+    "description": "Serious, ambitious people who plan everything, hold clear opinions and high career goals; financially literate, seek premium cards and investment products for long‑term planning",
+    "russian_name": "Амбициозные карьеристы",
+    "russian_description": "Серьезные люди с четкими карьерными целями. Финансово грамотны, всё планируют. Интересуются премиальными картами, инвестициями и долгосрочным планированием."
   },
   "4": {
     "name": "Keepers of the Past",
-    "description": "Primarily pensioners with low incomes; prefer cash, minimal banking products and dislike online services; price sensitive and value traditional in‑person interactions"
+    "description": "Primarily pensioners with low incomes; prefer cash, minimal banking products and dislike online services; price sensitive and value traditional in‑person interactions",
+    "russian_name": "Хранители прошлого",
+    "russian_description": "Преимущественно пенсионеры с маленьким доходом. Предпочитают наличные, минимум банковских продуктов. Чувствительны к цене, ценят живое общение в отделении, избегают онлайн-сервисов."
   }
 }

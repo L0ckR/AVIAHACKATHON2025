@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recsys"
+version = "0.1.0"
+description = "Streaming pipeline and baselines for T-ECD next-action experiments"
+requires-python = ">=3.10"
+authors = [{ name = "Muravyinaya Ferma" }]
+license = { text = "MIT" }
+dependencies = [
+  "datasets>=3.1.0",
+  "pyarrow>=22.0.0",
+  "pandas>=2.1.0",
+  "numpy>=1.24.0",
+  "huggingface_hub>=0.23.0",
+  "polars",
+  "tdigest",
+]
+
+[project.optional-dependencies]
+train = ["torch>=2.3.0"]
+dev = ["pytest>=7.4"]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+stream_tecd = "recsys.scripts.stream_tecd:main"
+download_filtered_full = "recsys.scripts.download_filtered_full:main"

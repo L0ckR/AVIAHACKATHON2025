@@ -61,14 +61,10 @@
                         
                         <div class="row text-start">
                             <div class="col-6 mb-3">
-                                <div class="stat-label">Возраст</div>
-                                <div class="stat-value" id="ageVal">-</div>
-                            </div>
-                            <div class="col-6 mb-3">
                                 <div class="stat-label">Риск-профиль</div>
                                 <div class="stat-value" id="riskVal">-</div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-6 mb-3">
                                 <div class="stat-label">Бонусы лояльности</div>
                                 <div class="stat-value text-primary" id="loyaltyVal">0</div>
                             </div>
@@ -140,7 +136,6 @@
             document.getElementById('userIdDisplay').innerText = `ID: ${data.user_id}`;
             document.getElementById('segmentBadge').innerText = data.segment;
             
-            // Цвет бейджа в зависимости от сегмента
             const seg = data.segment.toLowerCase();
             const badge = document.getElementById('segmentBadge');
             badge.className = 'badge fs-6 mb-3 ' + (
@@ -148,17 +143,14 @@
                 seg.includes('premium') ? 'bg-dark' : 'bg-success'
             );
 
-            document.getElementById('ageVal').innerText = data.age;
             document.getElementById('riskVal').innerText = data.risk_profile;
             document.getElementById('loyaltyVal').innerText = data.loyalty_points.toLocaleString();
             document.getElementById('incomeVal').innerText = data.income_level;
             document.getElementById('productsVal').innerText = data.active_products_count;
             
-            // Вставляем текст от LLM
             const llmText = data.llm_summary || "Описание не сформировано.";
-            document.getElementById('llmSummaryText').innerText = llmText;
+            document.getElementById('llmSummaryText').innerHTML = llmText; // ИСПРАВЛЕНО с innerText на innerHTML
 
-            // Интересы
             const interestsHtml = data.top_interests.map(tag => 
                 `<span class="interest-badge">${tag}</span>`
             ).join('');
@@ -167,7 +159,6 @@
             document.getElementById('profileContent').style.display = 'block';
         }
         
-        // Автозагрузка если есть в URL ?id=...
         window.onload = () => {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
